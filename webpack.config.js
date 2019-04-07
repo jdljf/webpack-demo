@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: '管理资源'
+      title: '开发'
     })
   ],
   output: {
