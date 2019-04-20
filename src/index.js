@@ -1,15 +1,26 @@
-import "core-js/modules/es6.promise";
-import "core-js/modules/es6.array.iterator";
+import _ from 'lodash'
 
-async function getComponent() {
-  var element = document.createElement('div')
-  const {default: _} = await import(/* webpackChunkName: "lodash" */ 'lodash');
+function component() {
+  let element = document.createElement('div');
+  let button = document.createElement('div');
+  let br = document.createElement('br');
 
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ')
+  button.innerHTML = 'click me and look at the console';
+  element.innerHTML = _.join(['hello', 'webpack'], ' ');
+  element.appendChild(br);
+  element.appendChild(button);
+
+  // Note that because a network request is involved, some indication
+  // of loading would need to be shown in a production-level site/app.
+  button.onclick = e => {
+    import(/* webpackChunkName: "print" */ './print').then(module => {
+      let print = module.default;
+
+      print()
+    })
+  }
 
   return element
 }
 
-getComponent().then(component => {
-  document.body.appendChild(component());
-})
+document.body.appendChild(component());
